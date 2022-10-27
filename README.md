@@ -1,6 +1,9 @@
 # Traffic Shock Wave Propagation Parameters
 A [MATLAB & Simulink](https://www.mathworks.com/products/matlab.html) program and model developed for MAS354 Modelling and Simulation at Murdoch University which seeks to identify the optimal vehicle speeds and driver behaviour to avoid shockwave generation and, therefore, the costs associated with the inefficient transit of the road section. At this stage, we seek to identify a relationship between road conditions and driver behaviours and the threshold values of the driver behaviour parameters that avoid the development of a traffic shock wave.
 
+To run the CA code to generate a plot of vehicle positions modify the values of the parameters in the RunCellularAutomataV2.m and run it.
+To run a parameter/output search, modify the parameters in the run_parameter_search.m and run it.
+
 # Development Workflow
 In short:
   1. Start a new feature branch for each set of edits that you do. See below.
