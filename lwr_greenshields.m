@@ -21,7 +21,7 @@ fd = LH_Greenshields(vfree,rhomax);
 % Create a spatial domain problem environment.
 pbEnv = LH_general(fd,xmin,xmax);
 % Define initial vehicle density and up/down-stream traffic flows.
-pbEnv.setIniDens([xmin xmax],100e-3);
+pbEnv.setIniDens([xmin xmax],90e-3);
 pbEnv.setUsFlows([tmin tmax],1);
 pbEnv.setDsFlows([tmin tmax],0);
 
