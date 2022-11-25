@@ -30,13 +30,13 @@ function [output_road, output_speed, output_accel] = CellAutomataV3(params)
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     % Extract the driver variable values
-    Max_Sp = params(1);
-    init_speed = params(2);
-    Max_Accel = params(3);
-    Max_Decel = params(4);
-    buffer = params(5);
-    Delta = params(6);
-    T_gap = params(7);
+    Max_Sp = params(4);
+    init_speed = params(5);
+    Max_Accel = params(6);
+    Max_Decel = params(7);
+    buffer = params(8);
+    Delta = params(9);
+    T_gap = params(10);
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     % Generate the state space vector
@@ -124,19 +124,19 @@ function [output_road, output_speed, output_accel] = CellAutomataV3(params)
                 % Model
                 Go_Faster = (Speed(j)/Max_Speed(j))^Delta;
                 Go_Slower = Buffer(j) + Speed(j)*T_gap + (Speed(j)*(Speed(j) - Speed_Ahead(j)))/(2*sqrt(Max_D(j)*Max_A(j)));
-                Speed_Delta = round(Max_A(j)*(1 - Go_Faster - (Go_Slower/Dist(j))^2));
+                Speed_Delta = (Max_A(j) + datasample(var_2, 1))*(1 - Go_Faster - (Go_Slower/Dist(j))^2);
                 accel(j) = Speed_Delta;
-                Speed(j) = Speed(j) + Speed_Delta + datasample(var_2, 1);
-                if Speed(j) < 0
-                    Speed(j) = 0;
-                end
+                Speed(j) = Speed(j) + Speed_Delta;
+                Speed(j) = max(0, Speed(j)); % Treat the case for -ve speeds
+                Speed(j) = min(Speed(j) + datasample(var_2, 1), Max_Speed(j) + datasample(var_2, 1)); % Treat the case for speeds > max speed
+
                 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
                 % add a vehicle marker to the output matrix
                 output_road(T, j) = 1;
 
                 % Calc next location of vehicle
-                newIndex = mod((j + Speed(j))-1, n)+1;
+                newIndex = mod((j + round(Speed(j)))-1, n)+1;
 
                 % Add the new location and vehical details to the transfer matrix
                 while New_Road_T(newIndex) ~= 0

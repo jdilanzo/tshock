@@ -28,20 +28,37 @@ function ParamSearch(params, parameter_num, start_range, end_range)
     
     % Create vector for the range and output
     x_val = start_range:end_range;
-    y_val = x_val*0;
+    y_val_speed = x_val*0;
 
     for i = x_val
         params(parameter_num)  = i;
         % Run the simulation
         [output_road, output_speed, output_accel] = CellAutomataV3(params);
-        y_val(1 + i - start_range) = mean(mean(output_speed)); 
+        y_val_speed(1 + i - start_range) = sum(sum(output_speed))/((params(3) + 1)*params(2));
+        y_val_accel(1 + i - start_range) = sum(sum((output_accel > 0).*output_accel))/((params(3) + 1)*params(2));
+        y_val_decel(1 + i - start_range) = sum(sum((output_accel < 0).*output_accel))/((params(3) + 1)*params(2));
     end
 
 
 
     figure(1)
-    plot(x_val, y_val)
+    plot(x_val, y_val_speed)
     xlabel('Number of vehicles in the road section');
     ylabel('Average speed achieved of all vehicles');
     titleText = sprintf('Plot of average speed of all vehicles with %d to %d vehicles', start_range, end_range);
+    title(titleText)
+
+
+    figure(2)
+    plot(x_val, y_val_accel)
+    xlabel('Number of vehicles in the road section');
+    ylabel('Average acceleration of all vehicles');
+    titleText = sprintf('Plot of average acceleration of all vehicles with %d to %d vehicles', start_range, end_range);
+    title(titleText)
+
+    figure(3)
+    plot(x_val, y_val_accel)
+    xlabel('Number of vehicles in the road section');
+    ylabel('Average deceleration of all vehicles');
+    titleText = sprintf('Plot of average deceleration of all vehicles with %d to %d vehicles', start_range, end_range);
     title(titleText)
