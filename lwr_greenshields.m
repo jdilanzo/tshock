@@ -1,4 +1,4 @@
-addpath('lwrsolver')
+addpath('lwrsolver'), mkdir ../Figures
 clear
 
 % Define state variables.
@@ -36,11 +36,19 @@ Q = fd.flow(K);
 U = Q./K;
 
 LH_plot3D(tscale,xscale,N,K,fd)
+fig = gcf; fig.PaperPositionMode = 'auto'; fig_pos = fig.PaperPosition; fig.PaperSize = [fig_pos(3) fig_pos(4)];
+print('../Figures/lwr_greenshield_plot3d.pdf','-dpdf');
 figure
 LH_plot2D(tscale,xscale,N,K,fd)
+fig = gcf; fig.PaperPositionMode = 'auto'; fig_pos = fig.PaperPosition; fig.PaperSize = [fig_pos(3) fig_pos(4)];
+print('../Figures/lwr_greenshield_plot2d.pdf','-dpdf');
 figure
 flow2d(tscale,xscale,Q,N,fd)
+fig = gcf; fig.PaperPositionMode = 'auto'; fig_pos = fig.PaperPosition; fig.PaperSize = [fig_pos(3) fig_pos(4)];
+print('../Figures/lwr_greenshield_flow2d.pdf','-dpdf');
 figure
 smsp2d(tscale,xscale,U,N,fd)
+fig = gcf; fig.PaperPositionMode = 'auto'; fig_pos = fig.PaperPosition; fig.PaperSize = [fig_pos(3) fig_pos(4)];
+print('../Figures/lwr_greenshield_smsp2d.pdf','-dpdf');
 
 NX = gradient(N);
