@@ -78,8 +78,9 @@ function [output_road, output_speed, output_accel] = CellAutomataV3(params)
 
     % Distribute the vehicles evenly
     step = floor(n/N);
-    data = 1:step:n;
-    locs = sort(datasample(data, N, 'Replace', false));
+    locs = 1:step:n;
+    % data = 1:step:n;
+    % locs = sort(datasample(data, N, 'Replace', false));
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Generate vectors to introduce random variation

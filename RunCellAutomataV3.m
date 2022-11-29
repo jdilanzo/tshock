@@ -27,10 +27,10 @@ clear
 
 params = zeros(1, 10);
 % define the state space parameters
-params(1) = 1000;    %the number of cells in the road section loop
-params(2) = 50;     % number of vehicles on the road section loop
+params(1) = 400;    %the number of cells in the road section loop
+params(2) = 100;     % number of vehicles on the road section loop
 params(3) = 200;    %the number of time steps
-params(4) = 10;     % max speed ~= speed limit
+params(4) = 40;     % max speed ~= speed limit
 params(5) = 5;      % speed at which venicles are initialised at
 params(6) = 3;      % maximum acceleration of the vehicle
 params(7) = 3;      % maximum braking of the vehicle
@@ -62,8 +62,23 @@ for i = 1:T
     end
 end
 
+% Convert cells to meters.
+xVals = xVals * 5;
+% Convert steps to seconds
+yVals = yVals * 9;
+
+Density = 0.2 * params(2)/params(1);
+titleText = sprintf('Plot of vehicle transit at a vehicle density of %0.3f cars/meter', Density);
+
+
 figure(1)
 scatter(xVals, yVals, 6, "black", "filled", "square")
+xlabel('Displacement (meters)')
+ylabel('time (seconds)')
+title(titleText)
+
+SpaceMeanSpeed = sum(sum(output_speed))/((params(3) + 1)*params(2))
+
 
 %{
 % generate an array of moving Averages

@@ -26,23 +26,21 @@ start_range
 end_range
 %}
 
-clear
-
 params = zeros(1, 10);
 % define the state space parameters
-params(1) = 1000;    %the number of cells in the road section loop
+params(1) = 200;    %the number of cells in the road section loop
 params(2) = 200;     % number of vehicles on the road section loop
 params(3) = 200;    % the number of time steps
-params(4) = 10;     % max speed ~= speed limit
+params(4) = 40;     % max speed ~= speed limit
 params(5) = 5;      % speed at which venicles are initialised at
 params(6) = 3;      % maximum acceleration of the vehicle
-params(7) = 5;      % maximum braking of the vehicle
+params(7) = 3;      % maximum braking of the vehicle
 params(8) = 0;      % buffer the driver maintains to the car ahead)
 params(9) = 4;      % parameter that is usually set to 4
 params(10) = 1.5;   % The minimum time gap between vehicles
 
-parameter_num = 2;
-start_range = 1;
-end_range = 150;
+parameter_num = 2;  % Parameter to be iterated over
+start_range = 1;   % Parameter start of range
+end_range = 150;    % Parameter end of range
 
 ParamSearch(params, parameter_num, start_range, end_range);

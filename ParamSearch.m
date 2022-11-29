@@ -39,26 +39,21 @@ function ParamSearch(params, parameter_num, start_range, end_range)
         y_val_decel(1 + i - start_range) = sum(sum((output_accel < 0).*output_accel))/((params(3) + 1)*params(2));
     end
 
-
+    y_val_speed = y_val_speed * 5/9; % convert to cells/delta_t to m/s
+    x_val = x_val * 0.001; % convert to cars/m
 
     figure(1)
     plot(x_val, y_val_speed)
-    xlabel('Number of vehicles in the road section');
-    ylabel('Average speed achieved of all vehicles');
-    titleText = sprintf('Plot of average speed of all vehicles with %d to %d vehicles', start_range, end_range);
+    xlabel('Vehicle Density (cars/meter)');
+    ylabel('Speed (m/s)');
+    titleText = sprintf('Space mean speed for the whole road section\n with densities from %0.2f to %0.2f cars/meter', ...
+        start_range * 0.001, end_range * 0.001);
     title(titleText)
 
-
-    figure(2)
-    plot(x_val, y_val_accel)
-    xlabel('Number of vehicles in the road section');
-    ylabel('Average acceleration of all vehicles');
-    titleText = sprintf('Plot of average acceleration of all vehicles with %d to %d vehicles', start_range, end_range);
-    title(titleText)
-
-    figure(3)
-    plot(x_val, y_val_accel)
-    xlabel('Number of vehicles in the road section');
-    ylabel('Average deceleration of all vehicles');
-    titleText = sprintf('Plot of average deceleration of all vehicles with %d to %d vehicles', start_range, end_range);
+    figure (2)
+    plot(x_val, y_val_speed.*x_val) % plot flow (density*speed) in cars/second
+    xlabel('Number of vehicles in the road section (density)');
+    ylabel('Vehicle Flow (cars/second)');
+    titleText = sprintf('Vehicle flow for the whole road section\n with densities from %0.2f to %0.2f cars/meter', ...
+        start_range * 0.001, end_range * 0.001);
     title(titleText)
